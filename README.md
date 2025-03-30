@@ -7,7 +7,7 @@
 
 Worksman is a Chrome extension that tries to bring Arc-like tab and workspace management to any Chromium browser.
 
-**Note**: No sessions/profiles support so you have different logins for each workspace, this only solves tab organization side (which is all I personally need).
+**Note**: No sessions/profiles support so you have different logins for each workspace, this only solves tab and workspace management side (which is all I personally need).
 
 - `cmd+t` - creating a new tab will assign it to the last "used" workspace
 - `cmd+s` - to toggle the overlay that looks like Arc's sidebar, except the layout can be actually customized (e.g. left/right sidebar, popup, ...)
@@ -31,3 +31,7 @@ Worksman is a Chrome extension that tries to bring Arc-like tab and workspace ma
 4. Options Page (`options.html`, `options.js`) - handles settings
 
 5. Manifest (`manifest.json`) - permissions, shortcuts, icons, etc.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details

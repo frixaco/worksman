@@ -1,0 +1,70 @@
+#worksman-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-direction: column;
+  position: fixed;
+  top: 4px;
+  right: 4px;
+  bottom: 4px;
+  width: 300px;
+  background: #1e1e2e;
+  z-index: 9999;
+  border-radius: 12px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border: 1px solid #585052;
+  font-size: 14px;
+}
+
+#worksman-tabs {
+  flex: 1;
+  padding: 12px;
+  gap: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.worksman-tab {
+  cursor: pointer;
+  color: #e3e3e3;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+}
+.worksman-tab:hover {
+  background-color: #2f2f47;
+  border-radius: 12px;
+  border: 1px solid #585052;
+}
+
+.worksman-tab > p {
+  margin: 0px;
+}
+
+#worksman-workspaces {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px;
+  border-top: 1px solid #585052;
+}
+
+.worksman-workspace-button {
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  color: #e3e3e3;
+  border-radius: 4px;
+  border: 1px solid #585052;
+  background-color: #1e1e2e;
+}
+
+.worksman-workspace-button:hover {
+  background-color: #2f2f47;
+}
+
+.worksman-workspace-active {
+  background-color: #2f2f47;
+}

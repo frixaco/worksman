@@ -3,11 +3,17 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "license": "MIT",
+  "scripts": {
+    "dev": "bun build *.ts --outdir . --watch",
+    "build": "bun build *.ts --outdir ."
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/chrome": "^0.0.313"
   },
   "peerDependencies": {
     "typescript": "^5"
-  }
+  },
+  "dependencies": {}
 }

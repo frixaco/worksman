@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "Worksman",
+  "version": "1.0.0",
+  "description": "Manage tabs and workspaces",
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "action": {},
+  "content_scripts": [
+    {
+      "js": ["content.js"],
+      "matches": ["<all_urls>"],
+      "css": ["content.css"]
+    }
+  ],
+  "commands": {
+    "toggle-overlay": {
+      "suggested-key": {
+        "default": "Ctrl+O",
+        "mac": "Command+O"
+      },
+      "description": "Toggle overlay"
+    }
+  },
+  "permissions": [
+    "windows",
+    "scripting",
+    "tabs",
+    "tabGroups",
+    "nativeMessaging",
+    "storage",
+    "commands",
+    "activeTab"
+  ]
+}
