@@ -4,67 +4,169 @@
   align-items: stretch;
   flex-direction: column;
   position: fixed;
-  top: 4px;
-  right: 4px;
-  bottom: 4px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
   width: 300px;
-  background: #1e1e2e;
   z-index: 9999;
-  border-radius: 12px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  border-radius: 8px;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
-  border: 1px solid #585052;
-  font-size: 14px;
+  background: rgba(205, 214, 244, 0.25);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(147, 153, 178, 0.3);
+  color: #313244;
+  box-shadow: 0 4px 30px rgba(24, 24, 37, 0.1);
+}
+
+.dark #worksman-overlay {
+  background: rgba(30, 30, 46, 0.75);
+  border: 1px solid rgba(69, 71, 90, 0.5);
+  color: #cdd6f4;
+  box-shadow: 0 4px 30px rgba(17, 17, 27, 0.3);
 }
 
 #worksman-tabs {
   flex: 1;
-  padding: 12px;
+  padding: 4px;
   gap: 4px;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 .worksman-tab {
   cursor: pointer;
-  color: #e3e3e3;
-  padding: 8px 12px;
-  border-radius: 12px;
-  border: 1px solid transparent;
+  padding: 10px 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  color: #313244;
+  background: rgba(205, 214, 244, 0.4);
+  border: 1px solid rgba(147, 153, 178, 0.2);
+  box-shadow: 0 1px 3px rgba(24, 24, 37, 0.05);
 }
+
+.dark .worksman-tab {
+  color: #cdd6f4;
+  background: rgba(49, 50, 68, 0.5);
+  border: 1px solid rgba(88, 91, 112, 0.3);
+  box-shadow: 0 1px 3px rgba(17, 17, 27, 0.2);
+}
+
 .worksman-tab:hover {
-  background-color: #2f2f47;
-  border-radius: 12px;
-  border: 1px solid #585052;
+  background: rgba(180, 190, 254, 0.3);
+  box-shadow: 0 2px 8px rgba(24, 24, 37, 0.08);
+  border: 1px solid rgba(180, 190, 254, 0.5);
+}
+
+.dark .worksman-tab:hover {
+  background: rgba(203, 166, 247, 0.2);
+  box-shadow: 0 2px 8px rgba(17, 17, 27, 0.3);
+  border: 1px solid rgba(203, 166, 247, 0.3);
 }
 
 .worksman-tab > p {
   margin: 0px;
+  font-weight: 500;
 }
 
 #worksman-workspaces {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 12px;
-  border-top: 1px solid #585052;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+  border-top: 1px solid rgba(147, 153, 178, 0.2);
+  background: rgba(186, 194, 222, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom-left-radius: 16px;
+  border-radius: 8px;
+}
+
+.dark #worksman-workspaces {
+  border-top: 1px solid rgba(88, 91, 112, 0.3);
+  background: rgba(24, 24, 37, 0.7);
 }
 
 .worksman-workspace-button {
+  flex-shrink: 0;
   cursor: pointer;
-  width: 36px;
-  height: 36px;
-  color: #e3e3e3;
-  border-radius: 4px;
-  border: 1px solid #585052;
-  background-color: #1e1e2e;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  color: #313244;
+  background: rgba(205, 214, 244, 0.6);
+  border: 1px solid rgba(147, 153, 178, 0.2);
+  box-shadow: 0 1px 3px rgba(24, 24, 37, 0.05);
+}
+
+.dark .worksman-workspace-button {
+  color: #cdd6f4;
+  background: rgba(49, 50, 68, 0.6);
+  border: 1px solid rgba(88, 91, 112, 0.3);
+  box-shadow: 0 1px 3px rgba(17, 17, 27, 0.2);
 }
 
 .worksman-workspace-button:hover {
-  background-color: #2f2f47;
+  background: rgba(180, 190, 254, 0.4);
+  border: 1px solid rgba(180, 190, 254, 0.5);
+  box-shadow: 0 2px 6px rgba(24, 24, 37, 0.1);
+}
+
+.dark .worksman-workspace-button:hover {
+  background: rgba(203, 166, 247, 0.3);
+  border: 1px solid rgba(203, 166, 247, 0.4);
+  box-shadow: 0 2px 6px rgba(17, 17, 27, 0.3);
 }
 
 .worksman-workspace-active {
-  background-color: #2f2f47;
+  background: rgba(137, 180, 250, 0.3) !important;
+  border: 1px solid rgba(137, 180, 250, 0.5) !important;
+  box-shadow: 0 1px 4px rgba(137, 180, 250, 0.2) !important;
+}
+
+.dark .worksman-workspace-active {
+  background: rgba(203, 166, 247, 0.4) !important;
+  border: 1px solid rgba(203, 166, 247, 0.5) !important;
+  box-shadow: 0 1px 4px rgba(203, 166, 247, 0.3) !important;
+}
+
+#worksman-tabs::-webkit-scrollbar {
+  width: 8px;
+}
+
+#worksman-tabs::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#worksman-tabs::-webkit-scrollbar-thumb {
+  background: rgba(147, 153, 178, 0.3);
+  border-radius: 4px;
+}
+
+.dark #worksman-tabs::-webkit-scrollbar-thumb {
+  background: rgba(88, 91, 112, 0.5);
+}
+
+#worksman-tabs::-webkit-scrollbar-thumb:hover {
+  background: rgba(127, 132, 156, 0.5);
+}
+
+.dark #worksman-tabs::-webkit-scrollbar-thumb:hover {
+  background: rgba(108, 112, 134, 0.7);
+}
+
+#worksman-workspace-button-add {
+  border: none;
+  font-size: 20px;
+  background: inherit;
 }

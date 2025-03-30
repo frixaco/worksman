@@ -53,6 +53,13 @@ function displayWorkspaces(
     });
     workspaces.append(btn);
   }
+
+  let addBtn = document.createElement("button");
+  addBtn.className = "worksman-workspace-button";
+  addBtn.id = "worksman-workspace-button-add";
+  addBtn.textContent = "+";
+  workspaces.append(addBtn);
+
   overlay.appendChild(workspaces);
 }
 
@@ -79,6 +86,13 @@ function toggleOverlay({
   overlay.style.display = overlay.style.display === "flex" ? "none" : "flex";
   displayTabs(overlay, tabs);
   displayWorkspaces(overlay, tabGroups, groupId);
+
+  if (
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  ) {
+    document.documentElement.classList.add("dark");
+  }
 }
 
 chrome.runtime.onMessage.addListener(
