@@ -1,0 +1,33 @@
+{
+  "name": "rsbuild-solid-ts",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "rsbuild build",
+    "dev": "rsbuild dev --open",
+    "format": "prettier --write .",
+    "lint": "eslint .",
+    "preview": "rsbuild preview"
+  },
+  "dependencies": {
+    "solid-js": "^1.9.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@rsbuild/core": "^1.2.16",
+    "@rsbuild/plugin-babel": "^1.0.4",
+    "@rsbuild/plugin-solid": "^1.0.5",
+    "@tailwindcss/postcss": "^4.0.17",
+    "eslint": "^9.21.0",
+    "eslint-plugin-solid": "^0.14.5",
+    "globals": "^16.0.0",
+    "prettier": "^3.5.2",
+    "tailwindcss": "^4.0.17",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.25.0"
+  },
+  "trustedDependencies": [
+    "core-js"
+  ]
+}
