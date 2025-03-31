@@ -54,11 +54,11 @@ function displayWorkspaces(
     workspaces.append(btn);
   }
 
-  let addBtn = document.createElement("button");
-  addBtn.className = "worksman-workspace-button";
-  addBtn.id = "worksman-workspace-button-add";
-  addBtn.textContent = "+";
-  workspaces.append(addBtn);
+  // let addBtn = document.createElement("button");
+  // addBtn.className = "worksman-workspace-button";
+  // addBtn.id = "worksman-workspace-button-add";
+  // addBtn.textContent = "+";
+  // workspaces.append(addBtn);
 
   overlay.appendChild(workspaces);
 }
