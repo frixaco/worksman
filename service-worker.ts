@@ -25,7 +25,7 @@ chrome.runtime.onMessage.addListener(
       const tabId = message.payload;
       chrome.tabs.update(tabId, { active: true });
     }
-  },
+  }
 );
 
 chrome.commands.onCommand.addListener(async (command) => {
@@ -58,37 +58,37 @@ chrome.commands.onCommand.addListener(async (command) => {
   }
 });
 
-chrome.tabs.onCreated.addListener(async (tab) => {
-  console.log("========== TAB CREATED ==========");
+// chrome.tabs.onCreated.addListener(async (tab) => {
+//   console.log("========== TAB CREATED ==========");
 
-  if (!tab || !tab.id) {
-    console.log("not a tab");
-    return;
-  }
+//   if (!tab || !tab.id) {
+//     console.log("not a tab");
+//     return;
+//   }
 
-  const tabGroups = await chrome.tabGroups.query({});
-  console.log("tabGroups", tabGroups);
+//   const tabGroups = await chrome.tabGroups.query({});
+//   console.log("tabGroups", tabGroups);
 
-  if (tabGroups.length > 0 && lastTabGroupId === -1) {
-    // TODO :ideally extension should remember last active workspace
-    lastTabGroupId = tabGroups[0]!.id;
-  }
-  console.log("lastTabGroupId", lastTabGroupId);
+//   if (tabGroups.length > 0 && lastTabGroupId === -1) {
+//     // TODO :ideally extension should remember last active workspace
+//     lastTabGroupId = tabGroups[0]!.id;
+//   }
+//   console.log("lastTabGroupId", lastTabGroupId);
 
-  if (lastTabGroupId === -1) {
-    return;
-  }
+//   if (lastTabGroupId === -1) {
+//     return;
+//   }
 
-  const tabs = await chrome.tabs.query({ groupId: lastTabGroupId });
+//   const tabs = await chrome.tabs.query({ groupId: lastTabGroupId });
 
-  const allTabIds = [...tabs.map((tab) => tab.id!), tab.id];
-  console.log("allTabIds", allTabIds);
+//   const allTabIds = [...tabs.map((tab) => tab.id!), tab.id];
+//   console.log("allTabIds", allTabIds);
 
-  await chrome.tabs.group({
-    tabIds: allTabIds,
-    groupId: lastTabGroupId,
-  });
-});
+//   await chrome.tabs.group({
+//     tabIds: allTabIds,
+//     groupId: lastTabGroupId,
+//   });
+// });
 
 chrome.tabs.onActivated.addListener(async (activeTabInfo) => {
   console.log("========== TAB ACTIVATED ==========");
