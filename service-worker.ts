@@ -1,8 +1,25 @@
 let lastTabGroupId = -1;
 
-chrome.action.onClicked.addListener((tab) => {
+chrome.action.onClicked.addListener(async (tab) => {
   if (tab?.id === undefined) return;
-  chrome.tabs.sendMessage(tab.id, { action: "toggleOverlay" });
+  console.log("clicked")
+
+  const tabGroups = await chrome.tabGroups.query({});
+
+  if (tab?.id === undefined) return;
+
+  lastTabGroupId = tab?.groupId;
+  const groupId = lastTabGroupId;
+  const tabs = await chrome.tabs.query({
+    groupId,
+  });
+
+  console.log({ tabs, tabGroups, groupId });
+  chrome.tabs.sendMessage(tab.id, {
+    action: "toggleOverlay", payload: {
+      tabs, tabGroups, groupId
+    }
+  });
 });
 
 chrome.runtime.onMessage.addListener(

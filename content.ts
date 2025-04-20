@@ -105,7 +105,7 @@ chrome.runtime.onMessage.addListener(
     };
   }) => {
     if (message.action === "toggleOverlay") {
-      console.log(message.payload);
+      console.log("content.js", message.payload);
       toggleOverlay(message.payload);
     }
   },
