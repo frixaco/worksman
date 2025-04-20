@@ -1,5 +1,14 @@
 # Worksman - browser extension that tries to bring Arc-like tab and workspace management to any Chromium browser
 
+## Go Sync API
+
+### TODO
+
+- [ ] Create new project and PostgeSQL database at railway.com
+- [ ] Create Go REST API
+    - [ ] POST `/sync` accepts tab & tab group data and saves it database as JSON
+    - [ ] GET `/sync` returns that JSON as is
+
 **Why?** I just want to switch from Arc to Brave
 **Status**:
 
