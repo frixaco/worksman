@@ -9,8 +9,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type TabData struct{}
-
 func main() {
 	r := gin.Default()
 	const path = "/data/data.json"
@@ -25,7 +23,7 @@ func main() {
 		}
 		defer file.Close()
 
-		var body TabData
+		var body map[string]any
 		if err := ctx.ShouldBindJSON(&body); err != nil {
 			fmt.Println("Failed to parse body as JSON", err)
 			ctx.JSON(http.StatusInternalServerError, gin.H{

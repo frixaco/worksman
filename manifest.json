@@ -6,7 +6,9 @@
   "background": {
     "service_worker": "service-worker.js"
   },
-  "action": {},
+  "action": {
+    "default_popup": "popup.html"
+  },
   "content_scripts": [
     {
       "js": ["content.js"],
@@ -21,11 +23,19 @@
         "mac": "Command+O"
       },
       "description": "Toggle overlay"
+    },
+    "manual-sync": {
+      "suggested-key": {
+        "default": "Ctrl+C",
+        "mac": "Command+C"
+      },
+      "description": "Sync tabs"
     }
   },
   "permissions": [
     "windows",
     "scripting",
+    "alarms",
     "tabs",
     "tabGroups",
     "nativeMessaging",

@@ -1,12 +1,13 @@
 # Worksman - browser extension that tries to bring Arc-like tab and workspace management to any Chromium browser
 
-**Why?** I just want to switch from Arc to Brave
-**Status**:
+### Status - WIP
 
-- WIP, but MVP is DONE
+**DONE**:
+
 - extension overlay can be toggled via a shortcut
 - auto add tab to a workspace
 - view tabs, workspaces and switch between them
+- manually save current tabs and restore them
 
 **Note**: No sessions/profiles support so you have different logins for each workspace, this only solves tab and workspace management side (which is all I personally need).
 
