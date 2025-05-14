@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "bun build *.ts --outdir . --watch",
-    "build": "bun build *.ts --outdir ."
+    "build:chrome": "bun build *.ts --outdir chrome/",
+    "build:firefox": "bun build *.ts --outdir firefox/"
   },
   "devDependencies": {
     "@types/bun": "latest",
