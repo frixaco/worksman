@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "Worksman (Firefox)",
+  "version": "1.0.0",
+  "description": "Manage tabs and workspaces",
+  "background": {
+    "scripts": ["service-worker.js"]
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "js": ["content.js"],
+      "matches": ["<all_urls>"],
+      "css": ["content.css"]
+    }
+  ],
+  "commands": {
+    "toggle-overlay": {
+      "suggested_key": {
+        "default": "Ctrl+O",
+        "mac": "Command+O"
+      },
+      "description": "Toggle overlay"
+    },
+    "manual-sync": {
+      "suggested_key": {
+        "default": "Ctrl+C",
+        "mac": "Command+C"
+      },
+      "description": "Sync tabs"
+    }
+  },
+  "permissions": ["scripting", "alarms", "tabs", "storage", "activeTab"],
+  "host_permissions": [
+    "<all_urls>",
+    "https://sync-api-production.up.railway.app/"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "worksman@example.com"
+    }
+  }
+}
