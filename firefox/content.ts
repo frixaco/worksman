@@ -12,13 +12,13 @@ function cg(tag: string, id: string): HTMLElement {
 }
 
 function displayTabs(overlay: HTMLDivElement, ts: browser.tabs.Tab[]) {
-  let tabsContainer = cg("div", "worksman-tabs") as HTMLDivElement;
+  const tabsContainer = cg("div", "worksman-tabs") as HTMLDivElement;
   tabsContainer.innerHTML = ""; // Clear previous tabs
   for (const t of ts) {
     // Ensure tab id exists for messaging, though it should for actual tabs
     if (t.id === undefined) continue;
 
-    let tabElement = document.createElement("div"); // Changed from p to div for consistency if needed
+    const tabElement = document.createElement("div"); // Changed from p to div for consistency if needed
     tabElement.className = "worksman-tab"; // Apply class to the div itself
     tabElement.title = t.url || "";
     tabElement.innerText = t.title || "Untitled Tab";
@@ -36,25 +36,8 @@ function displayTabs(overlay: HTMLDivElement, ts: browser.tabs.Tab[]) {
   }
 }
 
-// Workspace display is removed/simplified as tabGroups API is not available in Firefox
-function displayWorkspaces(overlay: HTMLDivElement) {
-  let workspacesDiv = document.getElementById("worksman-workspaces");
-  if (workspacesDiv) {
-    workspacesDiv.innerHTML = ""; // Clear or hide
-    // Optionally, display a message
-    // workspacesDiv.textContent = "Workspace feature (Tab Groups) is not available in Firefox.";
-    // Or simply remove it if it was appended before
-    if (workspacesDiv.parentNode) {
-      workspacesDiv.parentNode.removeChild(workspacesDiv);
-    }
-  }
-  // The #worksman-workspaces div might be created if cg("div", "worksman-workspaces") was called
-  // We ensure it's cleaned up or not displayed if not needed.
-}
-
 interface ToggleOverlayPayload {
   tabs: browser.tabs.Tab[];
-  // tabGroups and groupId are removed as they are not applicable for Firefox in this context
 }
 
 function toggleOverlay({ tabs }: ToggleOverlayPayload) {
@@ -78,17 +61,10 @@ function toggleOverlay({ tabs }: ToggleOverlayPayload) {
 
   if (overlay.style.display === "flex") {
     displayTabs(overlay, tabs);
-    // displayWorkspaces(overlay); // Workspace display is not used for Firefox
-    // Ensure the workspaces div is not added or is removed
-    let workspacesDiv = document.getElementById("worksman-workspaces");
-    if (workspacesDiv && workspacesDiv.parentNode) {
-      workspacesDiv.parentNode.removeChild(workspacesDiv);
-    }
   }
 
   if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
+    window.matchMedia?.("(prefers-color-scheme: dark)")?.matches
   ) {
     document.documentElement.classList.add("dark");
   } else {

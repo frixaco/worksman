@@ -9,12 +9,12 @@ function cg(tag, id) {
   return el;
 }
 function displayTabs(overlay, ts) {
-  let tabsContainer = cg("div", "worksman-tabs");
+  const tabsContainer = cg("div", "worksman-tabs");
   tabsContainer.innerHTML = "";
   for (const t of ts) {
     if (t.id === undefined)
       continue;
-    let tabElement = document.createElement("div");
+    const tabElement = document.createElement("div");
     tabElement.className = "worksman-tab";
     tabElement.title = t.url || "";
     tabElement.innerText = t.title || "Untitled Tab";
@@ -47,12 +47,8 @@ function toggleOverlay({ tabs }) {
   overlay.style.display = overlay.style.display === "flex" ? "none" : "flex";
   if (overlay.style.display === "flex") {
     displayTabs(overlay, tabs);
-    let workspacesDiv = document.getElementById("worksman-workspaces");
-    if (workspacesDiv && workspacesDiv.parentNode) {
-      workspacesDiv.parentNode.removeChild(workspacesDiv);
-    }
   }
-  if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+  if (window.matchMedia?.("(prefers-color-scheme: dark)")?.matches) {
     document.documentElement.classList.add("dark");
   } else {
     document.documentElement.classList.remove("dark");

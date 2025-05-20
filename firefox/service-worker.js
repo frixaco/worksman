@@ -26,9 +26,6 @@ browser.action.onClicked.addListener(async (tab) => {
   });
 });
 browser.runtime.onMessage.addListener(async (message, _sender, _sendResponse) => {
-  if (message.action === "setActiveWorkspace") {
-    console.log("setActiveWorkspace message received, but not applicable in Firefox version.");
-  }
   if (message.action === "activateTab") {
     const tabId = message.payload;
     if (typeof tabId === "number") {
@@ -65,8 +62,7 @@ function syncTabData(browserState, serverState) {
 browser.commands.onCommand.addListener(async (command) => {
   if (command === "manual-sync") {
     const tabs = await browser.tabs.query({});
-    const tabGroups = [];
-    const browserState = { tabs, tabGroups };
+    const browserState = { tabs };
     try {
       const res = await fetch("https://sync-api-production.up.railway.app/sync", {
         method: "GET"
@@ -97,7 +93,4 @@ browser.commands.onCommand.addListener(async (command) => {
       }
     });
   }
-});
-browser.tabs.onActivated.addListener(async (activeInfo) => {
-  console.log("Tab activated:", activeInfo.tabId);
 });

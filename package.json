@@ -5,7 +5,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "bun build *.ts --outdir . --watch",
+    "dev:ff": "bun build firefox/*.ts --outdir firefox/ --watch",
     "build:chrome": "bun build chrome/*.ts --outdir chrome/",
     "build:firefox": "bun build firefox/*.ts --outdir firefox/"
   },
@@ -17,5 +17,7 @@
   "peerDependencies": {
     "typescript": "^5"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@biomejs/biome": "^1.9.4"
+  }
 }

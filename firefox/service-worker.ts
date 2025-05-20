@@ -1,5 +1,3 @@
-// let lastTabGroupId = -1; // Not applicable for Firefox as tabGroups are not used
-
 const SYNC_ALARM = "sync-tabs";
 const SYNC_PERIOD_MIN = 0.5;
 
@@ -24,33 +22,21 @@ browser.alarms.onAlarm.addListener(async (alarm) => {
 browser.action.onClicked.addListener(async (tab) => {
   if (tab?.id === undefined) return;
 
-  // In Firefox, we operate on current window tabs as tabGroups are not available
+  // In Firefox, we operate on current window tabs
   const tabsInWindow = await browser.tabs.query({
     currentWindow: true,
-    // Optionally filter out pinned tabs or other specific tabs if needed
   });
 
   browser.tabs.sendMessage(tab.id, {
     action: "toggleOverlay",
     payload: {
       tabs: tabsInWindow,
-      // tabGroups and groupId are omitted
     },
   });
 });
 
 browser.runtime.onMessage.addListener(
   async (message, _sender, _sendResponse) => {
-    if (message.action === "setActiveWorkspace") {
-      // This action is related to tabGroups, which are not used in this Firefox version.
-      // You might want to log or ignore this message.
-      console.log(
-        "setActiveWorkspace message received, but not applicable in Firefox version.",
-      );
-      // lastTabGroupId = message.payload; // lastTabGroupId is removed
-      // Logic to switch to a group's first tab is not applicable.
-    }
-
     if (message.action === "activateTab") {
       const tabId = message.payload;
       if (typeof tabId === "number") {
@@ -69,11 +55,8 @@ browser.runtime.onMessage.addListener(
 
 type TabData = {
   tabs: browser.tabs.Tab[];
-  tabGroups: any[]; // Sending empty or handling server's tabGroups if any
 };
 
-// This function is a stub in the original code.
-// If implemented, it should handle browser.tabGroups potentially being empty.
 function syncTabData(browserState: TabData, serverState: TabData) {
   console.log("Syncing tab data (Firefox version):", {
     browserState,
@@ -106,9 +89,7 @@ function syncTabData(browserState: TabData, serverState: TabData) {
 browser.commands.onCommand.addListener(async (command) => {
   if (command === "manual-sync") {
     const tabs = await browser.tabs.query({});
-    const tabGroups: any[] = []; // Firefox: no tab groups API
-
-    const browserState: TabData = { tabs, tabGroups };
+    const browserState: TabData = { tabs };
 
     try {
       const res = await fetch(
@@ -144,17 +125,7 @@ browser.commands.onCommand.addListener(async (command) => {
       action: "toggleOverlay",
       payload: {
         tabs: tabsInWindow,
-        // tabGroups and groupId are omitted
       },
     });
   }
-});
-
-// The concept of 'lastTabGroupId' is removed as tabGroups are not used.
-// browser.tabs.onActivated is kept if other per-tab activation logic is needed in the future.
-browser.tabs.onActivated.addListener(async (activeInfo) => {
-  // const tab = await browser.tabs.get(activeInfo.tabId);
-  // Original logic related to tab.groupId is removed.
-  // If you need to do something when a tab is activated, do it here.
-  console.log("Tab activated:", activeInfo.tabId);
 });
