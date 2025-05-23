@@ -1,15 +1,20 @@
 // firefox/popup.ts
-document.getElementById("save").addEventListener("click", async () => {
-  const tabGroups = [];
+async function save(workspace) {
   const tabs = await browser.tabs.query({});
-  const browserState = { tabs, tabGroups };
+  const syncData = {
+    tabs: tabs.map((t) => ({
+      url: t.url,
+      pinned: t.pinned
+    })),
+    workspace
+  };
   try {
-    const res = await fetch("https://sync-api-production.up.railway.app/sync", {
+    const res = await fetch(`https://sync-api-production.up.railway.app/sync/${workspace}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(browserState)
+      body: JSON.stringify(syncData)
     });
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
@@ -20,25 +25,26 @@ document.getElementById("save").addEventListener("click", async () => {
     console.error("Error saving session:", error);
     document.getElementById("status").textContent = `Error saving: ${error instanceof Error ? error.message : String(error)}`;
   }
-});
-document.getElementById("update").addEventListener("click", async () => {
+}
+async function update(workspace) {
   try {
-    const res = await fetch("https://sync-api-production.up.railway.app/sync", {
+    const res = await fetch(`https://sync-api-production.up.railway.app/sync/${workspace}`, {
       method: "GET"
     });
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
     }
-    const serverState = await res.json();
-    const serverTabs = serverState.tabs || [];
+    const syncData = await res.json();
+    const syncTabs = syncData.tabs.toReversed() || [];
+    const syncWorkspace = syncData.workspace || "personal";
     const currentTabs = await browser.tabs.query({});
     const currentTabIds = currentTabs.map((t) => t.id).filter((id) => id !== undefined);
     if (currentTabIds.length > 0) {
       await browser.tabs.remove(currentTabIds);
     }
-    for (const t of serverTabs) {
+    for (const t of syncTabs) {
       if (t.url) {
-        await browser.tabs.create({ url: t.url });
+        await browser.tabs.create({ url: t.url, pinned: t.pinned });
       }
     }
     document.getElementById("status").textContent = "Session updated from server.";
@@ -46,4 +52,10 @@ document.getElementById("update").addEventListener("click", async () => {
     console.error("Error updating session:", error);
     document.getElementById("status").textContent = `Error updating: ${error instanceof Error ? error.message : String(error)}`;
   }
-});
+}
+document.getElementById("save-personal").addEventListener("click", async () => await save("personal"));
+document.getElementById("save-work").addEventListener("click", async () => await save("work"));
+document.getElementById("save-other").addEventListener("click", async () => await save("other"));
+document.getElementById("update-personal").addEventListener("click", async () => await update("personal"));
+document.getElementById("update-work").addEventListener("click", async () => await update("work"));
+document.getElementById("update-other").addEventListener("click", async () => await update("other"));

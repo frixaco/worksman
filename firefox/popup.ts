@@ -1,19 +1,24 @@
-document.getElementById("save")!.addEventListener("click", async () => {
-  // TabGroups are not supported in Firefox in the same way as Chrome.
-  // We'll send an empty array for tabGroups.
-  const tabGroups: any[] = []; // Firefox doesn't have browser.tabGroups.query
+async function save(workspace: string) {
   const tabs = await browser.tabs.query({});
-
-  const browserState = { tabs, tabGroups }; // Changed variable name for clarity
+  const syncData = {
+    tabs: tabs.map((t) => ({
+      url: t.url,
+      pinned: t.pinned,
+    })),
+    workspace,
+  };
 
   try {
-    const res = await fetch("https://sync-api-production.up.railway.app/sync", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      `https://sync-api-production.up.railway.app/sync/${workspace}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(syncData),
       },
-      body: JSON.stringify(browserState),
-    });
+    );
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
     }
@@ -25,18 +30,25 @@ document.getElementById("save")!.addEventListener("click", async () => {
     document.getElementById("status")!.textContent =
       `Error saving: ${error instanceof Error ? error.message : String(error)}`;
   }
-});
+}
 
-document.getElementById("update")!.addEventListener("click", async () => {
+async function update(workspace: string) {
   try {
-    const res = await fetch("https://sync-api-production.up.railway.app/sync", {
-      method: "GET",
-    });
+    const res = await fetch(
+      `https://sync-api-production.up.railway.app/sync/${workspace}`,
+      {
+        method: "GET",
+      },
+    );
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
     }
-    const serverState = await res.json();
-    const serverTabs = serverState.tabs || []; // Ensure serverTabs is an array
+    const syncData: {
+      tabs: { url: string; pinned: boolean }[];
+      workspace: string;
+    } = await res.json();
+    const syncTabs = syncData.tabs.toReversed() || [];
+    const syncWorkspace = syncData.workspace || "personal";
 
     const currentTabs = await browser.tabs.query({});
     const currentTabIds = currentTabs
@@ -47,10 +59,9 @@ document.getElementById("update")!.addEventListener("click", async () => {
       await browser.tabs.remove(currentTabIds);
     }
 
-    for (const t of serverTabs) {
+    for (const t of syncTabs) {
       if (t.url) {
-        // Ensure URL exists
-        await browser.tabs.create({ url: t.url });
+        await browser.tabs.create({ url: t.url, pinned: t.pinned });
       }
     }
     document.getElementById("status")!.textContent =
@@ -60,4 +71,24 @@ document.getElementById("update")!.addEventListener("click", async () => {
     document.getElementById("status")!.textContent =
       `Error updating: ${error instanceof Error ? error.message : String(error)}`;
   }
-});
+}
+
+document
+  .getElementById("save-personal")!
+  .addEventListener("click", async () => await save("personal"));
+document
+  .getElementById("save-work")!
+  .addEventListener("click", async () => await save("work"));
+document
+  .getElementById("save-other")!
+  .addEventListener("click", async () => await save("other"));
+
+document
+  .getElementById("update-personal")!
+  .addEventListener("click", async () => await update("personal"));
+document
+  .getElementById("update-work")!
+  .addEventListener("click", async () => await update("work"));
+document
+  .getElementById("update-other")!
+  .addEventListener("click", async () => await update("other"));
