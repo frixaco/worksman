@@ -56,6 +56,10 @@ async function update(workspace: string) {
       .filter((id): id is number => id !== undefined);
 
     if (currentTabIds.length > 0) {
+      // Unpin all tabs first to ensure they can be removed
+      for (const tabId of currentTabIds) {
+        await browser.tabs.update(tabId, { pinned: false });
+      }
       await browser.tabs.remove(currentTabIds);
     }
 

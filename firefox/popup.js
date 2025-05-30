@@ -40,6 +40,9 @@ async function update(workspace) {
     const currentTabs = await browser.tabs.query({});
     const currentTabIds = currentTabs.map((t) => t.id).filter((id) => id !== undefined);
     if (currentTabIds.length > 0) {
+      for (const tabId of currentTabIds) {
+        await browser.tabs.update(tabId, { pinned: false });
+      }
       await browser.tabs.remove(currentTabIds);
     }
     for (const t of syncTabs) {
