@@ -10,14 +10,14 @@ async function save(workspace: string) {
 
   try {
     const res = await fetch(
-      `https://sync-api-production.up.railway.app/sync/${workspace}`,
+      `https://api.tabsync.frixaco.com/sync/${workspace}`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(syncData),
-      },
+      }
     );
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
@@ -35,10 +35,10 @@ async function save(workspace: string) {
 async function update(workspace: string) {
   try {
     const res = await fetch(
-      `https://sync-api-production.up.railway.app/sync/${workspace}`,
+      `https://api.tabsync.frixaco.com/sync/${workspace}`,
       {
         method: "GET",
-      },
+      }
     );
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);

@@ -7,10 +7,7 @@
     "default_popup": "popup.html"
   },
   "permissions": ["scripting", "alarms", "tabs", "storage", "activeTab"],
-  "host_permissions": [
-    "<all_urls>",
-    "https://sync-api-production.up.railway.app/"
-  ],
+  "host_permissions": ["<all_urls>", "https://api.tabsync.frixaco.com/"],
   "browser_specific_settings": {
     "gecko": {
       "id": "worksman@frixaco.com"

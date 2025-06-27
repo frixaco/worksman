@@ -4,7 +4,7 @@ document.getElementById("save")!.addEventListener("click", async () => {
 
   const browser = { tabs, tabGroups };
 
-  const res = await fetch("https://sync-api-production.up.railway.app/sync", {
+  const res = await fetch("https://api.tabsync.frixaco.com/sync", {
     method: "POST",
     body: JSON.stringify(browser),
   });
@@ -12,11 +12,11 @@ document.getElementById("save")!.addEventListener("click", async () => {
   document.getElementById("status")!.textContent = JSON.stringify(
     server,
     null,
-    2,
+    2
   );
 });
 document.getElementById("update")!.addEventListener("click", async () => {
-  const res = await fetch("https://sync-api-production.up.railway.app/sync", {
+  const res = await fetch("https://api.tabsync.frixaco.com/sync", {
     method: "GET",
   });
   const server = await res.json();

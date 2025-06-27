@@ -9,7 +9,7 @@ async function save(workspace) {
     workspace
   };
   try {
-    const res = await fetch(`https://sync-api-production.up.railway.app/sync/${workspace}`, {
+    const res = await fetch(`https://api.tabsync.frixaco.com/sync/${workspace}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -28,7 +28,7 @@ async function save(workspace) {
 }
 async function update(workspace) {
   try {
-    const res = await fetch(`https://sync-api-production.up.railway.app/sync/${workspace}`, {
+    const res = await fetch(`https://api.tabsync.frixaco.com/sync/${workspace}`, {
       method: "GET"
     });
     if (!res.ok) {

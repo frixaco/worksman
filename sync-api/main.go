@@ -84,5 +84,5 @@ func main() {
 		ctx.Data(http.StatusOK, "application/json", data)
 	})
 
-	r.Run()
+	r.Run(":3000")
 }
