@@ -29,8 +29,7 @@ COPY --from=builder /app/main .
 # Create data directory for JSON files
 RUN mkdir -p /data
 
-# Expose port 3000 (default for Gin)
-EXPOSE 3000
+EXPOSE 4000
 
 # Run the binary
 CMD ["./main"]
