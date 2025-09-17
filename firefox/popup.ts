@@ -55,18 +55,29 @@ async function update(workspace: string) {
       .map((t) => t.id)
       .filter((id): id is number => id !== undefined);
 
-    // First create new tabs from sync data
-    for (const t of syncTabs) {
-      if (t.url) {
-        await browser.tabs.create({ url: t.url, pinned: t.pinned });
+    console.log("Current tabs:", currentTabs.length, "Sync tabs:", syncTabs.length);
+
+    // If no sync tabs, just create a new tab to avoid browser crash
+    if (syncTabs.length === 0) {
+      await browser.tabs.create({ url: "about:newtab" });
+    } else {
+      // Create new tabs from sync data
+      for (const t of syncTabs) {
+        if (t.url) {
+          await browser.tabs.create({ url: t.url, pinned: t.pinned });
+        }
       }
     }
 
-    // Then remove all old tabs (now safe since we have new tabs)
+    // Remove all old tabs after creating new ones
     if (currentTabIds.length > 0) {
       // Unpin all tabs first to ensure they can be removed
       for (const tabId of currentTabIds) {
-        await browser.tabs.update(tabId, { pinned: false });
+        try {
+          await browser.tabs.update(tabId, { pinned: false });
+        } catch (e) {
+          console.log("Could not unpin tab", tabId);
+        }
       }
       await browser.tabs.remove(currentTabIds);
     }
