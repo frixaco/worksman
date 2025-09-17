@@ -3,9 +3,7 @@
   "name": "Worksman",
   "version": "1.0.0",
   "description": "Manage tabs and workspaces",
-  "background": {
-    "service_worker": "service-worker.js"
-  },
+
   "action": {
     "default_popup": "popup.html"
   },
