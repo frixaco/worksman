@@ -51,7 +51,9 @@ async function update(workspace: string) {
     const syncWorkspace = syncData.workspace || "personal";
 
     const currentTabs = await browser.tabs.query({});
-    const currentTabIds = currentTabs
+    // Keep at least one tab to prevent browser crash
+    const tabsToRemove = currentTabs.slice(0, -1);
+    const currentTabIds = tabsToRemove
       .map((t) => t.id)
       .filter((id): id is number => id !== undefined);
 
@@ -61,6 +63,14 @@ async function update(workspace: string) {
         await browser.tabs.update(tabId, { pinned: false });
       }
       await browser.tabs.remove(currentTabIds);
+    }
+
+    // Remove the last tab after creating new ones
+    const lastTab = currentTabs[currentTabs.length - 1];
+    if (lastTab?.id && syncTabs.length > 0) {
+      setTimeout(() => {
+        browser.tabs.remove(lastTab.id!);
+      }, 1000);
     }
 
     for (const t of syncTabs) {
