@@ -9,29 +9,7 @@
   "action": {
     "default_popup": "popup.html"
   },
-  "content_scripts": [
-    {
-      "js": ["content.js"],
-      "matches": ["<all_urls>"],
-      "css": ["content.css"]
-    }
-  ],
-  "commands": {
-    "toggle-overlay": {
-      "suggested-key": {
-        "default": "Ctrl+O",
-        "mac": "Command+O"
-      },
-      "description": "Toggle overlay"
-    },
-    "manual-sync": {
-      "suggested-key": {
-        "default": "Ctrl+C",
-        "mac": "Command+C"
-      },
-      "description": "Sync tabs"
-    }
-  },
+
   "permissions": ["scripting", "alarms", "tabs", "storage", "activeTab"],
   "host_permissions": ["<all_urls>", "https://api.tabsync.frixaco.com/"]
 }
