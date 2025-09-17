@@ -39,16 +39,25 @@ async function update(workspace) {
     const syncWorkspace = syncData.workspace || "personal";
     const currentTabs = await chrome.tabs.query({});
     const currentTabIds = currentTabs.map((t) => t.id).filter((id) => id !== undefined);
+    console.log("Current tabs:", currentTabs.length, "Sync tabs:", syncTabs.length);
+    if (syncTabs.length === 0) {
+      await chrome.tabs.create({ url: "chrome://newtab/" });
+    } else {
+      for (const t of syncTabs) {
+        if (t.url) {
+          await chrome.tabs.create({ url: t.url, pinned: t.pinned });
+        }
+      }
+    }
     if (currentTabIds.length > 0) {
       for (const tabId of currentTabIds) {
-        await chrome.tabs.update(tabId, { pinned: false });
+        try {
+          await chrome.tabs.update(tabId, { pinned: false });
+        } catch (e) {
+          console.log("Could not unpin tab", tabId);
+        }
       }
       await chrome.tabs.remove(currentTabIds);
-    }
-    for (const t of syncTabs) {
-      if (t.url) {
-        await chrome.tabs.create({ url: t.url, pinned: t.pinned });
-      }
     }
     document.getElementById("status").textContent = "Session updated from server.";
   } catch (error) {
