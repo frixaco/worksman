@@ -32,15 +32,6 @@
       "description": "Sync tabs"
     }
   },
-  "permissions": [
-    "windows",
-    "scripting",
-    "alarms",
-    "tabs",
-    "tabGroups",
-    "nativeMessaging",
-    "storage",
-    "commands",
-    "activeTab"
-  ]
+  "permissions": ["scripting", "alarms", "tabs", "storage", "activeTab"],
+  "host_permissions": ["<all_urls>", "https://api.tabsync.frixaco.com/"]
 }

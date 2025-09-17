@@ -17,10 +17,26 @@
   </head>
   <body>
     <h1 id="title">Worksman Sync Control</h1>
-    <button id="save">Save session</button>
-    <button id="update">Update session</button>
 
-    <p>Status: <span id="status">-</span></p>
+    <div>
+      <span>personal</span>
+      <button id="save-personal">save</button>
+      <button id="update-personal">update</button>
+
+      <br />
+
+      <span>work</span>
+      <button id="save-work">save</button>
+      <button id="update-work">update</button>
+
+      <br />
+
+      <span>other</span>
+      <button id="save-other">save</button>
+      <button id="update-other">update</button>
+    </div>
+
+    <p>Response: <span id="status">-</span></p>
 
     <script type="module" src="popup.js"></script>
   </body>
