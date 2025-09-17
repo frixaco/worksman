@@ -51,32 +51,24 @@ async function update(workspace: string) {
     const syncWorkspace = syncData.workspace || "personal";
 
     const currentTabs = await chrome.tabs.query({});
-    // Keep at least one tab to prevent browser crash
-    const tabsToRemove = currentTabs.slice(0, -1);
-    const currentTabIds = tabsToRemove
+    const currentTabIds = currentTabs
       .map((t) => t.id)
       .filter((id): id is number => id !== undefined);
 
+    // First create new tabs from sync data
+    for (const t of syncTabs) {
+      if (t.url) {
+        await chrome.tabs.create({ url: t.url, pinned: t.pinned });
+      }
+    }
+
+    // Then remove all old tabs (now safe since we have new tabs)
     if (currentTabIds.length > 0) {
       // Unpin all tabs first to ensure they can be removed
       for (const tabId of currentTabIds) {
         await chrome.tabs.update(tabId, { pinned: false });
       }
       await chrome.tabs.remove(currentTabIds);
-    }
-
-    // Remove the last tab after creating new ones
-    const lastTab = currentTabs[currentTabs.length - 1];
-    if (lastTab?.id && syncTabs.length > 0) {
-      setTimeout(() => {
-        chrome.tabs.remove(lastTab.id!);
-      }, 1000);
-    }
-
-    for (const t of syncTabs) {
-      if (t.url) {
-        await chrome.tabs.create({ url: t.url, pinned: t.pinned });
-      }
     }
     document.getElementById("status")!.textContent =
       "Session updated from server.";
